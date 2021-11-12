@@ -13,18 +13,20 @@ function App() {
   const [token,setToken] = useState('')
   return (
     <Router>
-      <Switch> 
       <div className="App">
         <tokenContext.Provider value={[token,setToken]}>
-          <Route exact path="/" >  
-            <Home />
-          </Route>
-          <Route exact path="/usr" >
-            <User />
-          </Route>
+          <Switch>
+            <Route exact path="/" >  
+              <Home />
+            </Route>
+          </Switch>
+          <Switch>
+            <Route exact path="/usr" >
+              <User />
+            </Route>
+          </Switch>
           </tokenContext.Provider>
       </div>
-      </Switch>
     </Router>
   );
 }

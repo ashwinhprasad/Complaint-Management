@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom"
 import { useEffect, useContext } from "react"
 import { tokenContext } from "../../../App"
-import {Button} from "react-bootstrap"
+import {Button, Row, Col } from "react-bootstrap"
 
 const Home = () => {
 
@@ -23,7 +23,14 @@ const Home = () => {
                 <h2>File Complaint</h2>
                 <input type="text" name="title" placeholder="Complaint Title"/>
                 <input type="file" name="proof" />
-                <Button>Post</Button>
+                <Row>
+                    <Col>
+                        <Button variant="success" >Post</Button>
+                    </Col>
+                    <Col>
+                        <Button variant='danger'>Logout</Button>
+                    </Col>
+                </Row>
             </form>
         </div>
     )
