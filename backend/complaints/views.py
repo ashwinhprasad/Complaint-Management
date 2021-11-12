@@ -14,7 +14,7 @@ def post_complaint(request):
         complaint = serializer.save()
         complaint_data = ComplaintModel.objects.all().order_by('id')
         complaint_data = complaint_data[len(complaint_data)-1]
-        detect_mask(complaint_data)
+        output = detect_mask(complaint_data)
         return Response(ComplaintSerializer(complaint).data)
     else:
         return Response("Invalid Details")
