@@ -3,6 +3,7 @@ import { useEffect, useContext, useState } from "react"
 import { tokenContext } from "../../../App"
 import {Button, Row, Col } from "react-bootstrap"
 import axios from "axios"
+import Select from "react-select";
 
 const Home = () => {
 
@@ -10,13 +11,15 @@ const Home = () => {
     const [token,setToken] = useContext(tokenContext)
     const [complaint,setComplaint] = useState({
         'title':'',
-        'photo':''
+        'photo':'',
+        'is_mask_helmet':'mask'
     })
 
     const onComplaintPost = async (e) => {
         const data = new FormData()
         data.append('title',complaint.title)
         data.append('photo',complaint.photo)
+        data.append('is_mask_helmet',complaint.is_mask_helmet)
         const res = await axios.post('http://localhost:8000/api/complaint/',data,{
             'headers':{
                 'Authorization': `Token ${token}` 
@@ -25,7 +28,8 @@ const Home = () => {
         console.log(res)
         setComplaint({
             'title':'',
-            'photo':''
+            'photo':'',
+            'is_mask_helmet':'mask'
         })
     }
     
@@ -45,6 +49,18 @@ const Home = () => {
                 <input type="text" name="title" placeholder="Complaint Title" 
                 value={complaint.title}
                 onChange={(e) => setComplaint({...complaint,'title':e.target.value})} 
+                />
+                <br/>
+                <Select options={[
+                    { value: 'mask', label: 'Mask'},
+                    { value: 'helmet', label: 'Helmet'}
+                ]}
+                onChange={(e) => {
+                    setComplaint({
+                        ...complaint,
+                        'is_mask_helmet':e.value
+                    })
+                }}
                 />
                 <input type="file"  name="proof"
                 onChange={(e) => setComplaint({...complaint,'photo':e.target.files[0]})}  
