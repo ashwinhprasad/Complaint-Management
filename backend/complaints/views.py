@@ -15,8 +15,16 @@ def post_complaint(request):
         complaint = serializer.save()
         complaint_data = ComplaintModel.objects.all().order_by('id')
         complaint_data = complaint_data[len(complaint_data)-1]
-        output = detect_numberplate(complaint_data)
-        print(output)
-        return Response(ComplaintSerializer(complaint).data)
+        if ComplaintSerializer(complaint_data).data['is_mask_helmet'] == 'helmet':
+            output = detect_helmet(complaint_data)
+            number_plate = None
+        elif ComplaintSerializer(complaint_data).data['is_mask_helmet'] == 'mask':
+            output = detect_mask(complaint_data)
+            number_plate = detect_numberplate(complaint_data)
+        return Response({
+            'complaint':ComplaintSerializer(complaint).data,
+            'output':output,
+            'number_plate':number_plate
+        })
     else:
         return Response("Invalid Details")
