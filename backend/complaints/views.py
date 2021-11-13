@@ -5,6 +5,7 @@ from .models import ComplaintModel
 from rest_framework.response import Response
 from .check_mask import detect_mask
 from .check_helmet import detect_helmet
+from .check_numberplate import detect_numberplate
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
@@ -14,7 +15,7 @@ def post_complaint(request):
         complaint = serializer.save()
         complaint_data = ComplaintModel.objects.all().order_by('id')
         complaint_data = complaint_data[len(complaint_data)-1]
-        output = detect_helmet(complaint_data)
+        output = detect_numberplate(complaint_data)
         print(output)
         return Response(ComplaintSerializer(complaint).data)
     else:
