@@ -36,7 +36,9 @@ const User = () => {
 
     const onLogin = async () => {
         const res = await axios.post('http://localhost:8000/api/user/login/',loginForm)
-        localStorage.setItem("token",res.data.token);
+        if (res.data.token){
+            localStorage.setItem("token",res.data.token);
+        }
         history.push('/')
     }
 

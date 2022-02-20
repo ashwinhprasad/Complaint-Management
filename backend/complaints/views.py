@@ -17,10 +17,19 @@ def post_complaint(request):
         complaint_data = complaint_data[len(complaint_data)-1]
         if ComplaintSerializer(complaint_data).data['is_mask_helmet'] == 'helmet':
             output = detect_helmet(complaint_data)
-            number_plate = None
+            number_plate = detect_numberplate(complaint_data)
+            if output:
+                output = "Helmet Detected"
+            else:
+                output = "Helmet not detected"
+            
         elif ComplaintSerializer(complaint_data).data['is_mask_helmet'] == 'mask':
             output = detect_mask(complaint_data)
-            number_plate = detect_numberplate(complaint_data)
+            number_plate = None
+            if output:
+                output = "Mask not detected"
+            else:
+                output = "Mask detected"
         return Response({
             'complaint':ComplaintSerializer(complaint).data,
             'output':output,

@@ -174,4 +174,4 @@ def detect_mask(photo):
     img = cv2.imread("."+photo.photo.url)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     output = inference(img, show_result=False, target_shape=(260, 260))
-    return output[0]
+    return output[0][0]
